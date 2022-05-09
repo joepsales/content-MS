@@ -1,38 +1,62 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
+process.env.NODE_ENV = 'development';
+
+// Project Imports
+const app = require('./app');
+const cors = require('cors');
 const amqp = require('amqplib/callback_api');
+const bodyParser = require('body-parser');
+const http = require('http');
+const debug = require('debug')('node-angular');
 
-const PORT = 3002;
+// Used Statements
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+require('dotenv').config();
 
-amqp.connect('amqps://lzvlbhtr:6cvrOb5ZwKBJ1bJJJ3OOMKESR0Jhoyd8@chinook.rmq.cloudamqp.com/lzvlbhtr', (error0, connection) => {
-    if (error0) {
-        throw error0
+const normalizePort = val => {
+    var port = parseInt(val, 10);
+
+    if (isNaN(port)) {
+        return val;
     }
 
-    connection.createChannel((error1, channel) => {
-        if (error1) {
-            throw error1
-        }
+    if (port >= 0) {
+        return port;
+    }
 
-        channel.assertQueue('hello', { durable: false });
+    return false;
+};
 
+const onError = error => {
+    if (error.syscall !== "listen") {
+        throw error;
+    }
+    const bind = typeof addr === "string" ? "pipe " + addr : "port " + port;
+    switch (error.code) {
+        case "EACCES":
+            console.error(bind + " requires elevated privileges");
+            process.exit(1);
+            break;
+        case "EADDRINUSE":
+            console.error(bind + " is already in use");
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
+};
 
+const onListening = () => {
+    const addr = server.address();
+    const bind = typeof addr === "string" ? "pipe " + addr : "port " + port;
+    debug("Listening on " + bind);
+}
 
-        app.use(bodyParser.json());
+const port = normalizePort(process.env.PORT || "3001");
+app.set("port", port);
+app.use(cors());
 
-        // Main Endpoint
-        app.get('/', (req, res) => {
-            res.send('This is the default endpoint for Content-MS.');
-        });
-
-        channel.consume('hello', (msg) => {
-            console.log(msg.content.toString());
-        })
-
-        app.listen(PORT, () => {
-            console.log(`Service running on ${PORT}.`);
-        })
-    })
-})
-
+const server = http.createServer(app);
+server.on("error", onError);
+server.on("listening", onListening);
+server.listen(port);
