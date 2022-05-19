@@ -3,5 +3,5 @@
         "port": 3000,
         "ip": "0.0.0.0"
     },
-    "db": "mongodb+srv://salesjoep:LB9O4mMvsulQq8G2@social-it.wopsp.mongodb.net/schedule?retryWrites=true&w=majority"
+    "db": "mongodb+srv://salesjoep:LB9O4mMvsulQq8G2@social-it.wopsp.mongodb.net/post?retryWrites=true&w=majority"
 }

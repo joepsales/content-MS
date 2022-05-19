@@ -44,15 +44,15 @@ amqp.connect('amqps://lzvlbhtr:6cvrOb5ZwKBJ1bJJJ3OOMKESR0Jhoyd8@chinook.rmq.clou
             const post = new FbPost();
             post.content = eventPost.content;
             await axios.post(`https://graph.facebook.com/${pageId}/feed?message=${post.content}&access_token=${token}`, null)
-            // post.save(); 
+            post.save(); 
             console.log('Post created')
         }, { noAck: true })
 
-        channel.consume('post_deleted', async (msg) => {
-            const post_id = msg.content.toString();
-            await Post.deleteOne({post_id})
-            console.log(`Post with id ${post_id} deleted.`);
-        })
+        // channel.consume('post_deleted', async (msg) => {
+        //     const post_id = msg.content.toString();
+        //     await Post.deleteOne({post_id})
+        //     console.log(`Post with id ${post_id} deleted.`);
+        // })
     })
 })
 
