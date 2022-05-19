@@ -49,6 +49,7 @@ const onError = error => {
 const onListening = () => {
     const addr = server.address();
     const bind = typeof addr === "string" ? "pipe " + addr : "port " + port;
+    console.log(`Content-MS listening on port ${port}`);
     debug("Listening on " + bind);
 }
 
