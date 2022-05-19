@@ -20,6 +20,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/posts', postsRoutes);
+app.use('/content', postsRoutes);
 
 module.exports = app;
