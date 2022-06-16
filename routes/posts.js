@@ -7,7 +7,7 @@ const axios = require('axios');
 require('dotenv').config({ path: require('find-config')('.env') })
 const router = express.Router();
 
-const token = process.env.ACCESS_TOKEN;
+const token = "EAAPhMvZCmLZCUBAO7SldULWkfIBnaOX35xnoWLTE6RI22DIKZBkZC67hDC7urTSeKDU6rk29rZAEnot8dmYONC6ybMVLWwWK8lG0wNBYFXpwiZAGz4B8PFA9IPu7CkQ2MDuMce0MZCY2nO4ZBC1PoCaEbZCTtoYzfzWsZCcSvvURMNJmkycBbCzAakA8xzuDfDFJvCQS8icYJYIwZDZD";
 const pageId = process.env.PAGE_ID;
 
 // Message Broker
